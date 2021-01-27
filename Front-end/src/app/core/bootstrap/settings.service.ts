@@ -4,13 +4,26 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AppSettings, defaults } from '../settings';
 
 export const USER_KEY = 'usr';
+export const BLOG_KEY = 'blg';
+export const URL_KEY = 'url';
+export const PARAM_KEY = 'param';
+export const Show_KEY = 'show';
+export const BLG_KEY = 'blog';
 
 export interface User {
-  id: number;
+  id?: string;
   name?: string;
-  email?: string;
-  avatar?: string;
+  asset?: number;
 }
+
+export interface URL {
+  url?: string;
+}
+
+// export interface PARAM{
+//   needsRefresh?: Boolean;
+// }
+
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +51,10 @@ export class SettingsService {
     return this.options;
   }
 
+  get URL() {
+    return "http://172.26.108.157";
+  }
+
   /** User information */
 
   get user() {
@@ -63,3 +80,5 @@ export class SettingsService {
     this.notify$.next({ lang });
   }
 }
+
+

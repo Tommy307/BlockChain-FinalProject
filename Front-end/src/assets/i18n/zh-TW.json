@@ -1,6 +1,8 @@
 {
   "menu": {
     "dashboard": "數據大盤",
+    "transfer": "債權轉移",
+    "receipt": "查看債券",
     "design": "設計",
     "design.colors": "颜色系统",
     "design.icons": "Material 圖標庫",

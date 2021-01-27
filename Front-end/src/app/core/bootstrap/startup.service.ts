@@ -34,10 +34,9 @@ export class StartupService {
             // Refresh user info
             // In a real app, user data will be fetched from API
             this.settings.setUser({
-              id: 1,
-              name: 'Zongbin',
-              email: 'nzb329@163.com',
-              avatar: './assets/images/avatar.jpg',
+              id: "1",
+              name: '帅帅',
+              asset: 0,
             });
           },
           () => reject(),

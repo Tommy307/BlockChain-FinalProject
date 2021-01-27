@@ -5,13 +5,15 @@ import { RoutesRoutingModule } from './routes-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './sessions/login/login.component';
 import { RegisterComponent } from './sessions/register/register.component';
+import { TransferComponent } from './transfer/transfer.component';
+import { ReceiptComponent } from './receipt/receipt.component';
 
 const COMPONENTS = [DashboardComponent, LoginComponent, RegisterComponent];
 const COMPONENTS_DYNAMIC = [];
 
 @NgModule({
   imports: [SharedModule, RoutesRoutingModule],
-  declarations: [...COMPONENTS, ...COMPONENTS_DYNAMIC],
+  declarations: [...COMPONENTS, ...COMPONENTS_DYNAMIC, TransferComponent, ReceiptComponent],
   entryComponents: COMPONENTS_DYNAMIC,
 })
 export class RoutesModule {}

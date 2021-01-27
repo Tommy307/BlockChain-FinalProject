@@ -1,6 +1,8 @@
 {
   "menu": {
-    "dashboard": "Dashboard",
+    "dashboard": "Create Receipt",
+    "transfer": "Transfer Receipt",
+    "receipt": "Check Receipt",
     "design": "Design",
     "design.colors": "Color System",
     "design.icons": "Material Icons",

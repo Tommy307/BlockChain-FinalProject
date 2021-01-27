@@ -1,6 +1,8 @@
 {
   "menu": {
-    "dashboard": "数据大盘",
+    "dashboard": "债券开具",
+    "transfer": "债券转移",
+    "receipt": "查看债券",
     "design": "设计",
     "design.colors": "颜色系统",
     "design.icons": "Material 图标库",

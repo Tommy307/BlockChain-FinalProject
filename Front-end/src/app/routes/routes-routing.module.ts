@@ -5,6 +5,8 @@ import { environment } from '@env/environment';
 import { AdminLayoutComponent } from '../theme/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from '../theme/auth-layout/auth-layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { TransferComponent } from './transfer/transfer.component';
+import { ReceiptComponent } from './receipt/receipt.component';
 import { LoginComponent } from './sessions/login/login.component';
 import { RegisterComponent } from './sessions/register/register.component';
 import { AuthGuard } from '@core';
@@ -16,11 +18,21 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: 'receipt', pathMatch: 'full' },
+      {
+        path: 'receipt',
+        component: ReceiptComponent,
+        data: { title: 'Receipt', titleI18n: 'receipt' },
+      },
       {
         path: 'dashboard',
         component: DashboardComponent,
         data: { title: 'Dashboard', titleI18n: 'dashboard' },
+      },
+      {
+        path: 'transfer',
+        component: TransferComponent,
+        data: { title: 'Transfer', titleI18n: 'transfer' },
       },
       {
         path: 'sessions',
@@ -45,7 +57,7 @@ const routes: Routes = [
       },
     ],
   },
-  { path: '**', redirectTo: 'dashboard' },
+  { path: '**', redirectTo: 'receipt' },
 ];
 
 @NgModule({
