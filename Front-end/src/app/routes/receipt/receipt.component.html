@@ -1,1 +1,10 @@
-<p>receipt works!</p>
+<div *ngFor="let receipt of receipts">
+    <div class="receipt-container">
+        <p class="receipt-line">单号：{{receipt.id}}</p>
+        <p class="receipt-line">
+            债务人：{{receipt.debtee}}  
+            <span style="margin-left:20px;">债权人：{{receipt.debtor}}</span>
+        </p>
+        <p class="receipt-line">金额：{{receipt.amount}}</p>
+    </div>
+</div>

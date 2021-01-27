@@ -4,16 +4,23 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AppSettings, defaults } from '../settings';
 
 export const USER_KEY = 'usr';
-export const BLOG_KEY = 'blg';
+export const Receipt_KEY = 'rec';
 export const URL_KEY = 'url';
 export const PARAM_KEY = 'param';
 export const Show_KEY = 'show';
-export const BLG_KEY = 'blog';
+export const REC_KEY = 'rec';
 
 export interface User {
   id?: string;
   name?: string;
   asset?: number;
+}
+
+export interface Receipt {
+  id?: number;
+  debtee?: string;
+  debtor?: string;
+  amount?: number;
 }
 
 export interface URL {
@@ -67,6 +74,15 @@ export class SettingsService {
 
   removeUser() {
     this.store.remove(USER_KEY);
+  }
+
+  /** Receipt */
+  get usereceiptr() {
+    return this.store.get(REC_KEY);
+  }
+
+  setReceipt(value: Receipt) {
+    this.store.set(REC_KEY, value);
   }
 
   /** System language */
