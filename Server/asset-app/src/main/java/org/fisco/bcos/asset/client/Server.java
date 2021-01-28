@@ -5,10 +5,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Properties;
 import org.fisco.bcos.asset.contract.*;
 import org.fisco.bcos.sdk.BcosSDK;
 import org.fisco.bcos.sdk.abi.datatypes.generated.tuples.generated.Tuple2;
+
+import org.fisco.bcos.sdk.abi.datatypes.generated.tuples.generated.*;
 import org.fisco.bcos.sdk.client.Client;
 import org.fisco.bcos.sdk.crypto.keypair.CryptoKeyPair;
 import org.fisco.bcos.sdk.model.TransactionReceipt;
@@ -25,6 +28,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -44,6 +48,8 @@ public class Server{
 
     AssetClient assetClient;
 
+    ReceiptClient receiptClient;
+
     public void init(){
         try {
             
@@ -51,6 +57,10 @@ public class Server{
         assetClient = new AssetClient();
         assetClient.initialize();
         assetClient.deployAssetAndRecordAddr();
+
+        receiptClient = new ReceiptClient();
+        receiptClient.initialize();
+        receiptClient.deployReceiptAndRecordAddr();
         }
         catch (Exception e) {
             //TODO: handle exception
@@ -204,6 +214,7 @@ public class Server{
                     BigInteger status = tuple.getValue1();
                     BigInteger val = tuple.getValue2();
                   
+<<<<<<< HEAD
                     HashMap<String, Object> map = new HashMap<String, Object>();
                     map.put("Status", String.valueOf(status));
                     map.put("Asset_Value", String.valueOf(val));
@@ -211,7 +222,188 @@ public class Server{
                     sendObject(httpExchange, map);
                 }
             });
+
+            httpServer.createContext("/receipt/select", new HttpHandler() {
+                @Override
+                public void handle(HttpExchange httpExchange) throws IOException {
+                    printHeaders(httpExchange);
+        
+                    if (httpExchange.getRequestMethod().equals("OPTIONS")){
+                        
+                        sendObject(httpExchange, "NO OPTIONS");
+                        return;
+                    }
+
+                    String postString = IOUtils.toString(httpExchange.getRequestBody());
+                    
     
+                    JSONObject json = JSONObject.parseObject(postString);
+
+                    System.out.println("JSON:" + JSON.toJSONString(json));
+    
+                    String id = json.getString("id");
+                    //String pass = json.getString("password");
+
+                    Tuple4<BigInteger, String, String, BigInteger> tuple = receiptClient.select_(id);
+
+                    BigInteger status = tuple.getValue1();
+                    
+                  
+                    HashMap<String, Object> map = new HashMap<String, Object>();
+                    map.put("Status", String.valueOf(status));
+                    map.put("Content", json2String(tuple));
+
+                    sendObject(httpExchange, map);
+                }
+            });
+            
+            httpServer.createContext("/receipt/make", new HttpHandler() {
+                @Override
+                public void handle(HttpExchange httpExchange) throws IOException {
+                    printHeaders(httpExchange);
+        
+                    if (httpExchange.getRequestMethod().equals("OPTIONS")){
+                        
+                        sendObject(httpExchange, "NO OPTIONS");
+                        return;
+                    }
+
+                    String postString = IOUtils.toString(httpExchange.getRequestBody());
+                    
+    
+                    JSONObject json = JSONObject.parseObject(postString);
+
+                    System.out.println("JSON:" + JSON.toJSONString(json));
+    
+                    String debtor_account = json.getString("debtor_account");
+                    String debtee_account = json.getString("debtee_account");
+                    BigInteger amount = new BigInteger(json.getString("amount"));
+
+                    BigInteger status = null;
+
+                    int count = 0;
+                    while(true){
+                        Tuple4<BigInteger, String, String, BigInteger> tuple = receiptClient.select_(String.valueOf(count));
+
+                        if (tuple.getValue1().equals(new BigInteger("0"))){
+                            count ++;
+                        } else {
+                            status = receiptClient.make(String.valueOf(count), debtor_account, debtee_account, amount);
+                            break;
+                        }
+                    }
+                    
+                    
+                  
+                    HashMap<String, Object> map = new HashMap<String, Object>();
+                    map.put("Status", String.valueOf(status));
+                    map.put("ID", json2String(count));
+=======
+                    HashMap<String, Object> map = new HashMap<String, Object>();
+                    map.put("Status", String.valueOf(status));
+                    map.put("Asset_Value", String.valueOf(val));
+>>>>>>> 911b91b9374c6d3829225b2ab6e731b9c42bd72b
+
+                    sendObject(httpExchange, map);
+                }
+            });
+            
+            httpServer.createContext("/receipt/transfer", new HttpHandler() {
+                @Override
+                public void handle(HttpExchange httpExchange) throws IOException {
+                    printHeaders(httpExchange);
+        
+                    if (httpExchange.getRequestMethod().equals("OPTIONS")){
+                        
+                        sendObject(httpExchange, "NO OPTIONS");
+                        return;
+                    }
+
+                    String postString = IOUtils.toString(httpExchange.getRequestBody());
+                    
+    
+                    JSONObject json = JSONObject.parseObject(postString);
+
+                    System.out.println("JSON:" + JSON.toJSONString(json));
+    
+                    String from_account = json.getString("from_account");
+                    String to_account = json.getString("to_account");
+                    BigInteger amount = new BigInteger(json.getString("amount"));
+                    String id = json.getString("receipt_number");
+
+                    BigInteger status = null;
+
+                    int count = 0;
+                    while(true){
+                        Tuple4<BigInteger, String, String, BigInteger> tuple = receiptClient.select_(String.valueOf(count));
+
+                        if (tuple.getValue1().equals(new BigInteger("0"))){
+                            count ++;
+                        } else {
+                            status = receiptClient.transfer(id, from_account, to_account, amount, String.valueOf(count));
+                            break;
+                        }
+                    }
+                    
+                    
+                  
+                    HashMap<String, Object> map = new HashMap<String, Object>();
+                    map.put("Status", String.valueOf(status));
+                    map.put("NewID", json2String(count));
+
+                    sendObject(httpExchange, map);
+                }
+            });
+
+            httpServer.createContext("/receipt/selectAccount", new HttpHandler() {
+                @Override
+                public void handle(HttpExchange httpExchange) throws IOException {
+                    printHeaders(httpExchange);
+        
+                    if (httpExchange.getRequestMethod().equals("OPTIONS")){
+                        
+                        sendObject(httpExchange, "NO OPTIONS");
+                        return;
+                    }
+
+                    String postString = IOUtils.toString(httpExchange.getRequestBody());
+                    
+    
+                    JSONObject json = JSONObject.parseObject(postString);
+
+                    System.out.println("JSON:" + JSON.toJSONString(json));
+    
+                    String account = json.getString("account");
+
+                    BigInteger status = assetClient.queryAssetAmount(account).getValue1();
+
+
+                    int count = 0;
+                    ArrayList<String> arr = new ArrayList<String>();
+                    while(true){
+                        Tuple4<BigInteger, String, String, BigInteger> tuple = receiptClient.select_(String.valueOf(count));
+
+                        if (tuple.getValue1().equals(new BigInteger("0"))){
+                            if (tuple.getValue2().equals(account) || tuple.getValue3().equals(account)){
+                                arr.add(String.valueOf(count));
+                            }
+                        } else {
+                            
+                            break;
+                        }
+                        count ++;
+                    }
+                    
+                    
+                  
+                    HashMap<String, Object> map = new HashMap<String, Object>();
+                    map.put("Status", String.valueOf(status));
+                    map.put("Array", json2String(arr));
+
+                    sendObject(httpExchange, map);
+                }
+            });
+
             httpServer.start();
     
         } catch (Exception e) {
