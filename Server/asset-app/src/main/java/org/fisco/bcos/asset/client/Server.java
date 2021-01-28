@@ -214,7 +214,6 @@ public class Server{
                     BigInteger status = tuple.getValue1();
                     BigInteger val = tuple.getValue2();
                   
-<<<<<<< HEAD
                     HashMap<String, Object> map = new HashMap<String, Object>();
                     map.put("Status", String.valueOf(status));
                     map.put("Asset_Value", String.valueOf(val));
@@ -297,12 +296,6 @@ public class Server{
                   
                     HashMap<String, Object> map = new HashMap<String, Object>();
                     map.put("Status", String.valueOf(status));
-                    map.put("ID", json2String(count));
-=======
-                    HashMap<String, Object> map = new HashMap<String, Object>();
-                    map.put("Status", String.valueOf(status));
-                    map.put("Asset_Value", String.valueOf(val));
->>>>>>> 911b91b9374c6d3829225b2ab6e731b9c42bd72b
 
                     sendObject(httpExchange, map);
                 }

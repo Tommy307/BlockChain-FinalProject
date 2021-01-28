@@ -16,6 +16,10 @@ org/fisco/bcos/asset/client/Server.java
  org.fisco.bcos.asset.client.Server$1
  org.fisco.bcos.asset.client.Server$2
  org.fisco.bcos.asset.client.Server$3
+ org.fisco.bcos.asset.client.Server$4
+ org.fisco.bcos.asset.client.Server$5
+ org.fisco.bcos.asset.client.Server$6
+ org.fisco.bcos.asset.client.Server$7
 org/fisco/bcos/asset/contract/Asset.java
  org.fisco.bcos.asset.contract.Asset
  org.fisco.bcos.asset.contract.Asset$1
@@ -36,6 +40,8 @@ org/fisco/bcos/asset/contract/Asset.java
  org.fisco.bcos.asset.contract.Asset$9
  org.fisco.bcos.asset.contract.Asset$RegisterEventEventResponse
  org.fisco.bcos.asset.contract.Asset$TransferEventEventResponse
+org/fisco/bcos/asset/client/ReceiptClient.java
+ org.fisco.bcos.asset.client.ReceiptClient
 org/fisco/bcos/asset/contract/TableTest.java
  org.fisco.bcos.asset.contract.TableTest
  org.fisco.bcos.asset.contract.TableTest$1
@@ -107,3 +113,52 @@ org/fisco/bcos/asset/contract/Finance.java
  org.fisco.bcos.asset.contract.Finance$9
  org.fisco.bcos.asset.contract.Finance$FinancingEventEventResponse
  org.fisco.bcos.asset.contract.Finance$TransferEventEventResponse
+org/fisco/bcos/asset/contract/Receipt.java
+ org.fisco.bcos.asset.contract.Receipt
+ org.fisco.bcos.asset.contract.Receipt$1
+ org.fisco.bcos.asset.contract.Receipt$10
+ org.fisco.bcos.asset.contract.Receipt$11
+ org.fisco.bcos.asset.contract.Receipt$12
+ org.fisco.bcos.asset.contract.Receipt$13
+ org.fisco.bcos.asset.contract.Receipt$14
+ org.fisco.bcos.asset.contract.Receipt$15
+ org.fisco.bcos.asset.contract.Receipt$16
+ org.fisco.bcos.asset.contract.Receipt$17
+ org.fisco.bcos.asset.contract.Receipt$18
+ org.fisco.bcos.asset.contract.Receipt$19
+ org.fisco.bcos.asset.contract.Receipt$2
+ org.fisco.bcos.asset.contract.Receipt$20
+ org.fisco.bcos.asset.contract.Receipt$21
+ org.fisco.bcos.asset.contract.Receipt$22
+ org.fisco.bcos.asset.contract.Receipt$23
+ org.fisco.bcos.asset.contract.Receipt$24
+ org.fisco.bcos.asset.contract.Receipt$25
+ org.fisco.bcos.asset.contract.Receipt$26
+ org.fisco.bcos.asset.contract.Receipt$27
+ org.fisco.bcos.asset.contract.Receipt$28
+ org.fisco.bcos.asset.contract.Receipt$29
+ org.fisco.bcos.asset.contract.Receipt$3
+ org.fisco.bcos.asset.contract.Receipt$30
+ org.fisco.bcos.asset.contract.Receipt$31
+ org.fisco.bcos.asset.contract.Receipt$32
+ org.fisco.bcos.asset.contract.Receipt$33
+ org.fisco.bcos.asset.contract.Receipt$34
+ org.fisco.bcos.asset.contract.Receipt$35
+ org.fisco.bcos.asset.contract.Receipt$36
+ org.fisco.bcos.asset.contract.Receipt$37
+ org.fisco.bcos.asset.contract.Receipt$38
+ org.fisco.bcos.asset.contract.Receipt$39
+ org.fisco.bcos.asset.contract.Receipt$4
+ org.fisco.bcos.asset.contract.Receipt$40
+ org.fisco.bcos.asset.contract.Receipt$41
+ org.fisco.bcos.asset.contract.Receipt$42
+ org.fisco.bcos.asset.contract.Receipt$43
+ org.fisco.bcos.asset.contract.Receipt$5
+ org.fisco.bcos.asset.contract.Receipt$6
+ org.fisco.bcos.asset.contract.Receipt$7
+ org.fisco.bcos.asset.contract.Receipt$8
+ org.fisco.bcos.asset.contract.Receipt$9
+ org.fisco.bcos.asset.contract.Receipt$MakeEventEventResponse
+ org.fisco.bcos.asset.contract.Receipt$PayEventEventResponse
+ org.fisco.bcos.asset.contract.Receipt$TransferEventEventResponse
+ org.fisco.bcos.asset.contract.Receipt$TransferEvent_EventResponse

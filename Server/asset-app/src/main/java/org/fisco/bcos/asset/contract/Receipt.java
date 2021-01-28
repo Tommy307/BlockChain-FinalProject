@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package org.fisco.bcos.asset.contract;
 
 import java.math.BigInteger;
@@ -510,5 +509,3 @@ public class Receipt extends Contract {
         public String receipt_id;
     }
 }
-=======
->>>>>>> 911b91b9374c6d3829225b2ab6e731b9c42bd72b
