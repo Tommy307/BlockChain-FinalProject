@@ -13,8 +13,8 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  res_data : any;
-  
+  res_data: any;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -24,12 +24,12 @@ export class LoginComponent implements OnInit {
     private $http: HttpClient,
   ) {
     this.loginForm = this.fb.group({
-      username: ['',[Validators.required]],
-      password: ['',[Validators.required]],
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   get username() {
     return this.loginForm.get('username');
@@ -42,83 +42,50 @@ export class LoginComponent implements OnInit {
   login() {
     var name = this.loginForm.get('username').value;
     var pass = this.loginForm.get('password').value;
-    if(name == "" || pass == ""){
-      return ;
-    } 
+    if (name == "" || pass == "") {
+      return;
+    }
     var formData = {
-      username : name,
-      password : pass,
+      name: name,
+      password: pass,
     };
     console.log(JSON.stringify(formData));
     // 发送登录请求
-    // this.$http.post(this.settings.URL+":9999/user/login",formData).subscribe((res)=>{ 
-    //   this.res_data = res;
-    //   console.log(res);
-    //   if(this.res_data.Code != "200"){
-    //     alert("用户名或密码出错！");
-    //     return ;
-    //   }
-      
-    //   var id = this.res_data.Message.Id;
+    this.$http.post(this.settings.URL + ":8080/asset/login", formData).subscribe((res) => {
+      this.res_data = res;
+      console.log(res);
+      if (this.res_data.Status != "0") {
+        alert("用户名或密码出错！");
+        return;
+      }
 
-    //   this.$http.get(this.settings.URL+":9999/user/uid/"+id).subscribe(res=>{
-    //     // Set user info
-    //     console.log(res);
-    //     var res_string2 = JSON.stringify(res);
-    //     var res_data2 = {
-    //       Message:"",
-    //     };
-    //     res_data2 = JSON.parse(res_string2);
-    //     var mess_string = JSON.stringify(res_data2.Message);
-    //     var mess = {
-    //       Username : "",
-    //       Email : "",
-    //       Id : "",
-    //       Password : "",
-    //       Phone : "",
-    //     } 
-    //     mess = JSON.parse(mess_string);
-    //     // console.log(mess);
-    //     this.settings.setUser({
-    //       id: id,
-    //       name: mess.Username,
-    //     });
-        
-    //     // console.log(this.settings);
+      var formData = {
+        name: name,
+      };
 
-    //     const { token, uid, username } = { 
-    //       token: 'ng-matero-token', 
-    //       uid: id, 
-    //       username: mess.Username,
-    //     };
-    
-    //     // Set token info
-    //     this.token.set({ token, uid, username});
-    //     // Regain the initial data
-    //     this.startup.load().then(() => {
-    //       this.router.navigateByUrl("/");
-    //     });
-    //   })
-    //  });
-    //     this.settings.setUser({
-    //       id: id,
-    //       name: mess.Username,
-    //     });
-        
-    //     // console.log(this.settings);
+      this.$http.post(this.settings.URL + ":8080/asset/asset", formData).subscribe(res => {
+        console.log(res);
+        this.res_data = res;
+        this.settings.setUser({
+          id: "0",
+          name: name,
+          asset: this.res_data.Asset_Value,
+        })
 
-        const { token, uid, username, asset } = { 
-          token: 'ng-matero-token', 
-          uid: 0, 
-          username: "123",
-          asset: 0,
+        const { token, uid, username, asset } = {
+          token: 'ng-matero-token',
+          uid: 0,
+          username: name,
+          asset: this.res_data.Asset_Value,
         };
-    
+
         // Set token info
-        this.token.set({ token, uid, username});
+        this.token.set({ token, uid, username, asset });
         // Regain the initial data
         this.startup.load().then(() => {
           this.router.navigateByUrl("/");
         });
+      })
+    })
   }
 }

@@ -90,6 +90,11 @@ public class Server{
     
         // 设置响应头
         httpExchange.getResponseHeaders().add("Content-Type", "application/json; charset=UTF-8");
+        httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+        httpExchange.getResponseHeaders().add("Access-Control-Allow-Methods", "*");
+		httpExchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,XFILENAME,XFILECATEGORY,XFILESIZE");
+ 
+
         // 设置响应code和内容长度
         httpExchange.sendResponseHeaders(200, respContents.length);
 
@@ -117,6 +122,10 @@ public class Server{
                 public void handle(HttpExchange httpExchange) throws IOException {
                     printHeaders(httpExchange);
     
+                    if (httpExchange.getRequestMethod().equals("OPTIONS")){
+                        sendObject(httpExchange, "NO OPTIONS");
+                        return;
+                    }
 
                     String postString = IOUtils.toString(httpExchange.getRequestBody());
                     
@@ -137,11 +146,15 @@ public class Server{
                     sendObject(httpExchange, map);
                 }
             });
+
             httpServer.createContext("/asset/login", new HttpHandler() {
                 @Override
                 public void handle(HttpExchange httpExchange) throws IOException {
                     printHeaders(httpExchange);
-    
+                    if (httpExchange.getRequestMethod().equals("OPTIONS")){
+                        sendObject(httpExchange, "NO OPTIONS");
+                        return;
+                    }
 
                     String postString = IOUtils.toString(httpExchange.getRequestBody());
                     
@@ -169,12 +182,19 @@ public class Server{
                 @Override
                 public void handle(HttpExchange httpExchange) throws IOException {
                     printHeaders(httpExchange);
-    
+        
+                    if (httpExchange.getRequestMethod().equals("OPTIONS")){
+                        
+                        sendObject(httpExchange, "NO OPTIONS");
+                        return;
+                    }
 
                     String postString = IOUtils.toString(httpExchange.getRequestBody());
                     
     
                     JSONObject json = JSONObject.parseObject(postString);
+
+                    System.out.println("JSON:" + JSON.toJSONString(json));
     
                     String name = json.getString("name");
                     //String pass = json.getString("password");
@@ -183,12 +203,10 @@ public class Server{
 
                     BigInteger status = tuple.getValue1();
                     BigInteger val = tuple.getValue2();
-                    
-                    System.out.println("JSON:" + JSON.toJSONString(json));
-    
+                  
                     HashMap<String, Object> map = new HashMap<String, Object>();
                     map.put("Status", String.valueOf(status));
-                    map.put("Asset Value", String.valueOf(val));
+                    map.put("Asset_Value", String.valueOf(val));
 
                     sendObject(httpExchange, map);
                 }

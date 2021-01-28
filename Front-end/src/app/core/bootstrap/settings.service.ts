@@ -59,7 +59,7 @@ export class SettingsService {
   }
 
   get URL() {
-    return "http://172.26.108.157";
+    return "http://127.0.0.1";
   }
 
   /** User information */

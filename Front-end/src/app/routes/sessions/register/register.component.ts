@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private settings: SettingsService,
+    private token: TokenService,
     private $http: HttpClient,
   ) {
     this.registerForm = this.fb.group({
@@ -33,28 +34,43 @@ export class RegisterComponent implements OnInit {
     var pass = this.registerForm.get('password').value;
   
     var formData = {
-      username : name,
+      name : name,
       password : pass,
+      asset_value : 0,
     };
     // console.log(JSON.stringify(formData));
     console.log("submit to register.");
     // 发送注册请求
-    this.$http.post(this.settings.URL+":9999/user/register",formData).subscribe(res=>{ 
+    this.$http.post(this.settings.URL+":8080/asset/register",formData).subscribe(res=>{ 
       console.log(res); 
       this.res_data = res;
-      if(this.res_data.Type == "success"){
-        this.$http.get(this.settings.URL+":9999/user/username/"+name).subscribe(res=>{
+      console.log(this.res_data);
+      if(this.res_data.Status == "0"){
+        var formData = {
+          name : name,
+        };
+        this.$http.post(this.settings.URL+":8080/asset/asset",formData).subscribe(res=>{
           console.log(res);
           this.res_data = res;
+          const { token, uid, username, asset } = {
+            token: 'ng-matero-token',
+            uid: 0,
+            username: name,
+            asset: this.res_data.Asset_Value,
+          };
+  
+          // Set token info
+          this.token.set({ token, uid, username, asset });
           this.settings.setUser({
-            id: this.res_data.Message.Id,
-            name: this.res_data.Message.Username,
-            asset: 0,
+            id: "0",
+            name: name,
+            asset: this.res_data.Asset_Value,
           })
           this.router.navigateByUrl("/login");
         })
+        this.router.navigateByUrl("/login");
       } else {
-        alert(this.res_data.Message);
+        alert("用户名已存在");
       }
      });
   }

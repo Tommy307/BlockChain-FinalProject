@@ -33,11 +33,11 @@ export class StartupService {
 
             // Refresh user info
             // In a real app, user data will be fetched from API
-            this.settings.setUser({
-              id: "1",
-              name: '帅帅',
-              asset: 0,
-            });
+            // this.settings.setUser({
+            //   id: "1",
+            //   name: '帅帅',
+            //   asset: 0,
+            // });
           },
           () => reject(),
           () => resolve(null)
