@@ -11,8 +11,10 @@ import { HttpClient } from "@angular/common/http";
 })
 export class TransferComponent implements OnInit {
 
-  @Input() receipt: Receipt;
   receiptForm: FormGroup;
+
+  res_data: any;
+
   constructor(
     private settings: SettingsService,
     private fb: FormBuilder,
@@ -20,9 +22,9 @@ export class TransferComponent implements OnInit {
     // this.receipt = this.settings.user;
     // console.log(this.user);
     this.receiptForm = this.fb.group({
-      id: [0,[Validators.required]],
+      id: ['',[Validators.required]],
       debtor: ['',[Validators.required]],
-      amount: [0,[Validators.required]],
+      amount: ['',[Validators.required]],
     });
   }
 
@@ -34,16 +36,24 @@ export class TransferComponent implements OnInit {
     var debtor = this.receiptForm.get('debtor').value;
     var amount = this.receiptForm.get('amount').value;
     var formData = {
-      id : id,
-      debtee : this.settings.user.name,
-      debtor : debtor,
+      receipt_number : id,
+      from_account : this.settings.user.name,
+      to_account : debtor,
       amount : amount,
     };
-    // this.http.put(this.settings.URL+":9999/user/"+this.settings.user.id,formData).subscribe(res=>{ 
-    //   console.log(res);
+    this.http.post(this.settings.URL+":8080/receipt/transfer",formData).subscribe(res=>{ 
+      console.log(res);
+      this.res_data = res;
+
+      if(this.res_data.Status == "0"){
+        alert("转移成功");
+        this.receiptForm.reset();
+      } else{
+        alert("转移失败，请检查信息输入是否有误！");
+      }
       
-    //   location.reload();
-    // });
+      // location.reload();
+    });
   }
 
 

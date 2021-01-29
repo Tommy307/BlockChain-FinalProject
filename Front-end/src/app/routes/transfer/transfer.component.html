@@ -3,15 +3,15 @@
     <form [formGroup]="receiptForm">
         <li>
             使用的债券单号：
-            <input [(ngModel)]="receipt.id" placeholder="请输入希望转移的债券单号" formControlName="id">
+            <input placeholder="请输入希望转移的债券单号" formControlName="id">
         </li>
         <li>
             转移给债权人：
-            <input [(ngModel)]="receipt.debtor" placeholder="请输入新的债权人的账户" formControlName="debtor">
+            <input placeholder="请输入新的债权人的账户" formControlName="debtor">
         </li>
         <li>
             转移金额：
-            <input [(ngModel)]="receipt.amount" placeholder="请输入希望转移的金额" formControlName="amount">
+            <input placeholder="请输入希望转移的金额" formControlName="amount">
         </li>
         <button class="save-button" mat-raised-button color="primary"
             (click)="submit()">确认

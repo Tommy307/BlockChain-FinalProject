@@ -3,11 +3,11 @@
     <form [formGroup]="receiptForm">
         <li>
             债权人：
-            <input [(ngModel)]="receipt.debtor" placeholder="请输入债权人的账户" formControlName="debtor">
+            <input placeholder="请输入债权人的账户" formControlName="debtor">
         </li>
         <li>
             金额：
-            <input [(ngModel)]="receipt.amount" placeholder="请输入债券的金额" formControlName="amount">
+            <input placeholder="请输入债券的金额" formControlName="amount">
         </li>
         <button class="save-button" mat-raised-button color="primary"
             (click)="submit()">确认
