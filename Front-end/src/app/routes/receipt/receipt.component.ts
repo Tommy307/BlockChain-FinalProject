@@ -41,26 +41,9 @@ export class ReceiptComponent implements OnInit {
       console.log(this.receipt_id);
       this.receipts = [];
       for(var i=0;i<this.receipt_id.length;++i){
-        console.log(this.receipt_id[i]);
-        var formData = {
-          id: this.receipt_id[i],
-        };
-        this.$http.post(this.settings.URL + ":8080/receipt/select", formData).subscribe(res =>{
-          console.log(res);
-          this.res_receipt = res;
-          this.res_content = JSON.parse(this.res_receipt.Content);
-          if(this.res_receipt.Status == "0"){
-            console.log(this.res_content);
-            var rec = {
-              id: formData.id,
-              debtee: this.res_content.value2,
-              debtor: this.res_content.value3,
-              amount: this.res_content.value4,
-            }
-            this.receipts.push(rec);
-            console.log(this.receipts);
-          }
-        })
+        this.getReceipt(this.receipt_id[i]);
+        // console.log(this.receipt_id[i]);
+        
       }
       // this.receipts.forEach((val,ind) => {
       //   var formData = {
@@ -125,5 +108,26 @@ export class ReceiptComponent implements OnInit {
     // })
   }
 
+  getReceipt(id):void{
+    var formData = {
+      id: id,
+    };
+    this.$http.post(this.settings.URL + ":8080/receipt/select", formData).subscribe(res =>{
+      console.log(res);
+      this.res_receipt = res;
+      this.res_content = JSON.parse(this.res_receipt.Content);
+      if(this.res_receipt.Status == "0"){
+        console.log(this.res_content);
+        var rec = {
+          id: formData.id,
+          debtee: this.res_content.value2,
+          debtor: this.res_content.value3,
+          amount: this.res_content.value4,
+        }
+        this.receipts.push(rec);
+        console.log(this.receipts);
+      }
+    })
+  }
 
 }
