@@ -14,6 +14,12 @@ export class ReceiptComponent implements OnInit {
 
   res_data: any;
 
+  receipt_id: [];
+
+  res_receipt: any;
+
+  res_content: any;
+
   pageIndex = 1;
 
   constructor(
@@ -27,26 +33,57 @@ export class ReceiptComponent implements OnInit {
     // if (this.receipt.flag == false) {
     //   let req = new HttpParams().set('page', this.pageIndex+"").set('eachPage',"5");
     var formData = {
-      id: this.settings.user.name,
+      account: this.settings.user.name,
     };
-    this.$http.post(this.settings.URL + ":8080/receipt/select", formData).subscribe(res => {
+    this.$http.post(this.settings.URL + ":8080/receipt/selectAccount", formData).subscribe(res => {
       this.res_data = res;
-      this.receipts = this.res_data.Content;
-      console.log(this.receipts);
-      this.receipts = [
-        {
-          id: 1,
-          debtee: "car_compony",
-          debtor: "hub_compony",
-          amount: 1000,
-        },
-        {
-          id: 2,
-          debtee: "car_compony",
-          debtor: "hub_compony",
-          amount: 2000,
-        }
-      ];
+      this.receipt_id = JSON.parse(this.res_data.Array);
+      console.log(this.receipt_id);
+      this.receipts = [];
+      for(var i=0;i<this.receipt_id.length;++i){
+        console.log(this.receipt_id[i]);
+        var formData = {
+          id: this.receipt_id[i],
+        };
+        this.$http.post(this.settings.URL + ":8080/receipt/select", formData).subscribe(res =>{
+          console.log(res);
+          this.res_receipt = res;
+          this.res_content = JSON.parse(this.res_receipt.Content);
+          if(this.res_receipt.Status == "0"){
+            console.log(this.res_content);
+            var rec = {
+              id: this.res_content.value1,
+              debtee: this.res_content.value2,
+              debtor: this.res_content.value3,
+              amount: this.res_content.value4,
+            }
+            this.receipts.push(rec);
+            console.log(this.receipts);
+          }
+        })
+      }
+      // this.receipts.forEach((val,ind) => {
+      //   var formData = {
+      //     id: val,
+      //   };
+      //   this.$http.post(this.settings.URL + ":8080/receipt/select", formData).subscribe(res =>{
+      //     console.log(res);
+      //   })
+      // })
+      // this.receipts = [
+      //   {
+      //     id: 1,
+      //     debtee: "car_compony",
+      //     debtor: "hub_compony",
+      //     amount: 1000,
+      //   },
+      //   {
+      //     id: 2,
+      //     debtee: "car_compony",
+      //     debtor: "hub_compony",
+      //     amount: 2000,
+      //   }
+      // ];
       // this.cd.detectChanges();
     })
     // }

@@ -1,6 +1,12 @@
 {
   "menu": [
     {
+      "route": "receipt",
+      "name": "receipt",
+      "type": "link",
+      "icon": "book"
+    },
+    {
       "route": "dashboard",
       "name": "dashboard",
       "type": "link",
