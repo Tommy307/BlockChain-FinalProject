@@ -52,7 +52,7 @@ export class ReceiptComponent implements OnInit {
           if(this.res_receipt.Status == "0"){
             console.log(this.res_content);
             var rec = {
-              id: this.res_content.value1,
+              id: formData.id,
               debtee: this.res_content.value2,
               debtor: this.res_content.value3,
               amount: this.res_content.value4,
