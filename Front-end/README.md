@@ -33,6 +33,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## 使用  
 首先下载 Angular 对应的 nodeJs，具体会用到其中的 npm 软件包。  
-然后在 Front-end 文件夹下，打开终端，运行 npm start 即可运行 web 服务器。
-打开浏览器，输入 `http://localhost:4200/` 即可进行访问：  
+然后在 Front-end 文件夹下，打开终端：     
+- 运行 `npm install` 安装依赖;    
+- 运行 `npm start` 即可运行 web 服务器;    
+- 打开浏览器，输入 `http://localhost:4200/` 即可进行访问：  
 
