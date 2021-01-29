@@ -29,11 +29,11 @@ export class DashboardComponent implements OnInit {
   }
 
   submit(){
-    var debtor = this.receiptForm.get('debtor').value;
+    var debtee = this.receiptForm.get('debtor').value;
     var amount = this.receiptForm.get('amount').value;
     var formData = {
-      debtee_account : this.settings.user.name,
-      debtor_account : debtor,
+      debtee_account : debtee,
+      debtor_account : this.settings.user.name,
       amount : amount,
     };
     this.http.post(this.settings.URL+":8080/receipt/make",formData).subscribe(res=>{ 
